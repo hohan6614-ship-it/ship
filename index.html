@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3월 팀 일정 시각화</title>
+    <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css' rel='stylesheet' />
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js'></script>
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/locales/ko.js'></script>
+    <style>
+        body { font-family: 'Pretendard', sans-serif; margin: 20px; background-color: #f8f9fa; }
+        #calendar { max-width: 1100px; margin: 0 auto; background: white; padding: 20px; border-radius: 8px; shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .fc-event { cursor: pointer; border: none !important; }
+        .legend { display: flex; justify-content: center; gap: 15px; margin-bottom: 20px; }
+        .legend-item { display: flex; align-items: center; font-size: 14px; }
+        .box { width: 15px; height: 15px; margin-right: 5px; border-radius: 3px; }
+    </style>
+</head>
+<body>
+
+<h2 style="text-align: center;">📅 3월 팀 통합 스케줄러</h2>
+<div class="legend">
+    <div class="legend-item"><div class="box" style="background: #3788d8;"></div>수업/정규</div>
+    <div class="legend-item"><div class="box" style="background: #e74c3c;"></div>불가/여행</div>
+    <div class="legend-item"><div class="box" style="background: #f1c40f;"></div>알바/회의</div>
+</div>
+
+<div id='calendar'></div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var calendarEl = document.getElementById('calendar');
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+            initialView: 'timeGridWeek', // 주간 시간표 우선
+            initialDate: '2026-03-02',
+            locale: 'ko',
+            headerToolbar: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'dayGridMonth,timeGridWeek,timeGridDay'
+            },
+            slotMinTime: '08:00:00',
+            slotMaxTime: '22:00:00',
+            allDaySlot: false,
+            events: [
+                // --- 주환 ---
+                { title: '주환(수업)', daysOfWeek: [1], startTime: '15:00', endTime: '17:50', color: '#3498db' },
+                { title: '주환(수업)', daysOfWeek: [2], startTime: '10:30', endTime: '11:50', color: '#3498db' },
+                { title: '주환(수업)', daysOfWeek: [2], startTime: '15:00', endTime: '17:50', color: '#3498db' },
+                { title: '주환(수업)', daysOfWeek: [4], startTime: '13:00', endTime: '14:50', color: '#3498db' },
+                { title: '주환(오전불가)', start: '2026-03-13T09:00:00', end: '2026-03-16T12:00:00', color: '#e74c3c' },
+
+                // --- 서림 ---
+                { title: '서림(수업)', daysOfWeek: [2], startTime: '09:00', endTime: '10:50', color: '#9b59b6' },
+                { title: '서림(수업)', daysOfWeek: [2], startTime: '12:00', endTime: '13:10', color: '#9b59b6' },
+                { title: '서림(수업)', daysOfWeek: [3], startTime: '15:00', endTime: '16:10', color: '#9b59b6' },
+                { title: '서림(수업)', daysOfWeek: [3], startTime: '17:30', endTime: '21:50', color: '#9b59b6' },
+                { title: '서림(수업)', daysOfWeek: [5], startTime: '09:00', endTime: '15:00', color: '#9b59b6' },
+
+                // --- 유민 ---
+                { title: '유민(알바)', daysOfWeek: [1,2], startTime: '17:00', endTime: '21:00', color: '#f1c40f' },
+                { title: '유민(답사)', start: '2026-03-06', end: '2026-03-09', color: '#e74c3c' },
+                { title: '유민(수업)', daysOfWeek: [1], startTime: '09:00', endTime: '11:50', color: '#1abc9c' },
+
+                // --- 혜원 ---
+                { title: '혜원(수업)', daysOfWeek: [5], startTime: '09:00', endTime: '14:50', color: '#e67e22' },
+                { title: '혜원(학회)', daysOfWeek: [1], startTime: '18:30', endTime: '21:00', color: '#f1c40f' },
+                { title: '혜원(알바)', start: '2026-03-15T09:00:00', end: '2026-03-15T16:00:00', color: '#f1c40f' },
+
+                // --- 유나/가은/수민 등 기타 주요 불가 일정 ---
+                { title: '유나(여행)', start: '2026-03-12', end: '2026-03-16T13:00:00', color: '#e74c3c' },
+                { title: '수민/가은(불가)', start: '2026-03-07', display: 'background', color: '#ffcfcf' },
+                { title: '수민/가은(불가)', start: '2026-03-14', display: 'background', color: '#ffcfcf' },
+                
+                // --- 승호 ---
+                { title: '승호(서울)', daysOfWeek: [1], startTime: '12:00', endTime: '17:50', color: '#34495e' },
+                { title: '승호(서울)', daysOfWeek: [3], startTime: '12:00', endTime: '13:10', color: '#34495e' }
+            ]
+        });
+        calendar.render();
+    });
+</script>
+
+</body>
+</html>
